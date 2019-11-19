@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import dev.dsluo.polls.R;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

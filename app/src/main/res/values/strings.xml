@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Polls</string>
+    <string name="polls">Polls</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a metus pulvinar, suscipit ex ut, vulputate erat.</string>
+    <string name="vote">Vote</string>
+    <string name="results">Results</string>
 </resources>

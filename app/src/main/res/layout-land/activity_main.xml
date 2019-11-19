@@ -15,8 +15,8 @@
         android:text="@string/polls"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/poll_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/poll_list"
+        app:layout_constraintStart_toStartOf="@+id/poll_list"
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
@@ -24,10 +24,30 @@
         android:name="dev.dsluo.polls.view.PollListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/poll_detail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:layout="@layout/poll_list_fragment" />
+        tools:layout="@layout/poll_list_fragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/poll_detail"
+        android:name="dev.dsluo.polls.view.PollDetailFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/poll_list"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/poll_detail_fragment">
+
+    </fragment>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
