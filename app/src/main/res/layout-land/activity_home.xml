@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.auth.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
 
         <fragment
             android:id="@+id/poll_list"
-            android:name="dev.dsluo.polls.view.PollListFragment"
+            android:name="dev.dsluo.polls.ui.home.PollListFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
 
         <fragment
             android:id="@+id/poll_detail"
-            android:name="dev.dsluo.polls.view.PollDetailFragment"
+            android:name="dev.dsluo.polls.ui.home.PollDetailFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

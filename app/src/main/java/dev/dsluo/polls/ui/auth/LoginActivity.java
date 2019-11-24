@@ -1,28 +1,24 @@
-package dev.dsluo.polls;
+package dev.dsluo.polls.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import dev.dsluo.polls.R;
+import dev.dsluo.polls.ui.home.HomeActivity;
+
+public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_LOGIN = 123;
-
-    private DrawerLayout drawer;
-    private NavigationView navigation;
 
     private List<AuthUI.IdpConfig> providers;
     private FirebaseAuth auth;
@@ -30,10 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        drawer = findViewById(R.id.drawer);
-        navigation = findViewById(R.id.navigation);
+        setContentView(R.layout.activity_login);
 
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build()
@@ -45,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
             showLogin();
         else
             showHome();
-
     }
 
     private void showLogin() {
@@ -62,20 +54,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_LOGIN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
             if (resultCode == RESULT_OK) {
                 showHome();
+                finish();
             } else {
-                Snackbar.make(drawer, "Could not sign in.", Snackbar.LENGTH_SHORT);
+                Toast.makeText(this, "Could not sign in", Toast.LENGTH_SHORT).show();
                 showLogin();
             }
         }
     }
 
     private void showHome() {
-        FirebaseUser user = auth.getCurrentUser();
-        Snackbar.make(drawer, "signed in as " + user.getDisplayName(), Snackbar.LENGTH_LONG);
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
-
 }
