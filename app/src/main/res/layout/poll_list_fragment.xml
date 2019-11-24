@@ -4,6 +4,7 @@
     android:id="@+id/poll_recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarStyle="outsideOverlay"
     android:scrollbars="vertical"
     tools:itemCount="30"
     tools:listitem="@layout/poll_card" />
