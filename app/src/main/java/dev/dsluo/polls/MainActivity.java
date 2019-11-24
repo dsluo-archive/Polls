@@ -1,16 +1,23 @@
 package dev.dsluo.polls;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import dev.dsluo.polls.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout drawer;
+    private NavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        drawer = findViewById(R.id.drawer);
+        navigation = findViewById(R.id.navigation);
     }
 }

@@ -35,7 +35,7 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 100;
     }
 
 }
