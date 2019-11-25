@@ -1,4 +1,4 @@
-package dev.dsluo.polls.ui.home;
+package dev.dsluo.polls.ui.home.detail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

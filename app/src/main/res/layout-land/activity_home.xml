@@ -12,7 +12,7 @@
 
         <fragment
             android:id="@+id/poll_list"
-            android:name="dev.dsluo.polls.ui.home.PollListFragment"
+            android:name="dev.dsluo.polls.ui.home.list.PollListFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
 
         <fragment
             android:id="@+id/poll_detail"
-            android:name="dev.dsluo.polls.ui.home.PollDetailFragment"
+            android:name="dev.dsluo.polls.ui.home.detail.PollDetailFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
