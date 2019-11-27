@@ -5,7 +5,13 @@ admin.initializeApp();
 
 export const createUser = functions.auth.user().onCreate(user => {
     const userDoc = {
-        groups: []
+        userId: user.uid,
+        emailVerified: user.emailVerified,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        phoneNumber: user.phoneNumber,
+        disabled: user.disabled
     };
     return admin.firestore()
         .collection('users')
