@@ -17,6 +17,9 @@ import dev.dsluo.polls.data.models.User;
 import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
+/**
+ * {@link ViewModel} for {@link HomeActivity}.
+ */
 public class HomeViewModel extends ViewModel {
     private MutableLiveData<User> user;
     private MutableLiveData<List<Group>> groups;
@@ -26,6 +29,11 @@ public class HomeViewModel extends ViewModel {
 
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
+    /**
+     * Retrieve the current authenticated {@link User}.
+     *
+     * @return The current {@link User}.
+     */
     public LiveData<User> getUser() {
         if (this.user == null) {
             this.user = new MutableLiveData<>();
@@ -44,6 +52,11 @@ public class HomeViewModel extends ViewModel {
         return user;
     }
 
+    /**
+     * Get {@link Group}s subscribed to by the currently authenticated {@link User}.
+     *
+     * @return The {@link User}'s {@link Group}s
+     */
     public LiveData<List<Group>> getGroups() {
         if (this.groups == null) {
             this.groups = new MutableLiveData<>();
@@ -65,6 +78,9 @@ public class HomeViewModel extends ViewModel {
         return groups;
     }
 
+    /**
+     * Clears subscriptions created by {@link #getGroups()} and {@link #getUser()}.
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

@@ -17,6 +17,11 @@ import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.ui.home.list.PollListFragment;
 
+/**
+ * Home Activity. Displays current list of polls and list of groups in side navigation bar.
+ *
+ * @author David Luo
+ */
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private NavigationView navigation;
@@ -25,6 +30,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private PollListFragment listFragment;
 
+    /**
+     * Initializes navbar and begins observation of changes to the {@link dev.dsluo.polls.data.models.User},
+     * and their {@link Group}s.
+     *
+     * @param savedInstanceState {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

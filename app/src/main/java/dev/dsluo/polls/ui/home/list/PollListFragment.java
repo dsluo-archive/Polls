@@ -15,6 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
 
+/**
+ * Fragment to display list of polls for specified group. By default, no group is displayed, and this
+ * fragment is empty.
+ * <p>
+ * TODO: add help information when this fragment is empty.
+ *
+ * @author David Luo
+ */
 public class PollListFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -23,10 +31,23 @@ public class PollListFragment extends Fragment {
 
     private PollListViewModel viewModel;
 
+    /**
+     * Set the {@link Group} to display.
+     *
+     * @param group A valid instance of {@link Group}.
+     */
     public void setActiveGroup(Group group) {
         viewModel.setActiveGroup(group);
     }
 
+    /**
+     * Inflate the fragment layout and start listening for polls.
+     *
+     * @param inflater           {@inheritDoc}
+     * @param container          {@inheritDoc}
+     * @param savedInstanceState {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

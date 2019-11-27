@@ -14,21 +14,47 @@ import java.util.List;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Poll;
 
+/**
+ * Adapter for {@link PollListFragment}'s recycler.
+ *
+ * @author David Luo
+ */
 public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder> {
     private List<Poll> polls;
 
+    /**
+     * Constructor
+     *
+     * @param polls The list of polls to display.
+     */
     public PollAdapter(List<Poll> polls) {
         this.polls = polls;
     }
 
+    /**
+     * Constructor, with default no polls displayed.
+     */
     public PollAdapter() {
         this.polls = Collections.emptyList();
     }
 
+    /**
+     * Sets the polls to be displayed. <strong>DOES NOT</strong> call {@link #notifyDataSetChanged()}.
+     * This must be called explicitly.
+     *
+     * @param polls {@inheritDoc}
+     */
     public void setPolls(List<Poll> polls) {
         this.polls = polls;
     }
 
+    /**
+     * Makes a new {@link PollViewHolder} and inflate its layout for the recycler.
+     *
+     * @param parent   {@inheritDoc}
+     * @param viewType {@inheritDoc}
+     * @return A new {@link PollViewHolder}
+     */
     @NonNull
     @Override
     public PollViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,22 +63,42 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
         return new PollViewHolder(cardView);
     }
 
+
+    /**
+     * Fills out the views in the {@link PollViewHolder} with information from {@link #polls}.
+     *
+     * @param holder   A {@link PollViewHolder}
+     * @param position The index in {@link #polls} that is being bound.
+     */
     @Override
     public void onBindViewHolder(@NonNull PollViewHolder holder, int position) {
         Poll poll = polls.get(position);
         holder.question.setText(poll.question);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The size of {@link #polls}
+     */
     @Override
     public int getItemCount() {
         return polls.size();
     }
 
+    /**
+     * {@link RecyclerView.ViewHolder} for {@link PollAdapter}
+     */
     public static class PollViewHolder extends RecyclerView.ViewHolder {
 
         public final CardView card;
         public final TextView question;
 
+        /**
+         * Constructor
+         *
+         * @param view The {@link CardView} to be held.
+         */
         public PollViewHolder(@NonNull CardView view) {
             super(view);
             card = view;

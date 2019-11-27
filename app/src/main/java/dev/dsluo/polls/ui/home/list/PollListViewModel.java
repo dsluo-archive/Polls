@@ -15,6 +15,11 @@ import dev.dsluo.polls.data.models.Poll;
 import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.POLL_COLLECTION;
 
+/**
+ * {@link ViewModel} for {@link PollListFragment}.
+ *
+ * @author David Luo
+ */
 public class PollListViewModel extends ViewModel {
     private MutableLiveData<List<Poll>> polls;
     private ListenerRegistration pollListenerRegistration = null;
@@ -23,6 +28,11 @@ public class PollListViewModel extends ViewModel {
 
     private Group activeGroup = null;
 
+    /**
+     * Get the polls for the currently displayed {@link Group}.
+     *
+     * @return A {@link LiveData} of {@link List} of {@link Poll}s.
+     */
     public LiveData<List<Poll>> getPolls() {
         if (this.polls == null) {
             this.polls = new MutableLiveData<>();
@@ -30,10 +40,20 @@ public class PollListViewModel extends ViewModel {
         return polls;
     }
 
+    /**
+     * Get the currently displayed {@link Group}.
+     *
+     * @return The currently displayed {@link Group}.
+     */
     public Group getActiveGroup() {
         return activeGroup;
     }
 
+    /**
+     * Set the currently displayed {@link Group} and start listening for {@link Poll}s in that {@link Group}.
+     *
+     * @param group The {@link Group} to display.
+     */
     public void setActiveGroup(Group group) {
         this.activeGroup = group;
 
@@ -58,6 +78,9 @@ public class PollListViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Clears any remaining subscriptions subscribed by {@link #setActiveGroup(Group)}.
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

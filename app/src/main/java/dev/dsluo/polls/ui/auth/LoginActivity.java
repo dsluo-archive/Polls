@@ -16,6 +16,11 @@ import java.util.List;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.ui.home.HomeActivity;
 
+/**
+ * Login Activity. Defers to {@link AuthUI} to handle login/registration details.
+ *
+ * @author David Luo
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_LOGIN = 123;
@@ -23,6 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     private List<AuthUI.IdpConfig> providers;
     private FirebaseAuth auth;
 
+    /**
+     * Set up {@link AuthUI} and show it if user is not logged in. Else redirect to home page.
+     *
+     * @param savedInstanceState {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
             showHome();
     }
 
+    /**
+     * Show the {@link AuthUI}.
+     */
     private void showLogin() {
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()
@@ -49,6 +62,21 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
+    /**
+     * Show {@link HomeActivity}.
+     */
+    private void showHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Handle the result of {@link #showLogin()} and show the homepage or an error.
+     *
+     * @param requestCode Must be {@link #RC_LOGIN} to take action.
+     * @param resultCode  {@inheritDoc}
+     * @param data        {@inheritDoc}
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -58,14 +86,10 @@ public class LoginActivity extends AppCompatActivity {
                 showHome();
                 finish();
             } else {
-                Toast.makeText(this, "Could not sign in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Could not sign in.", Toast.LENGTH_SHORT).show();
                 showLogin();
             }
         }
     }
 
-    private void showHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
 }
