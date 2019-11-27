@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Polls</string>
     <string name="polls">Polls</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a metus pulvinar, suscipit ex ut, vulputate erat.</string>
+    <string name="lipsum_sentence">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a metus pulvinar, suscipit ex ut, vulputate erat.</string>
+    <string name="lipsum_name">Lorem Ipsum</string>
+    <string name="lipsum_email">lorem@ipsum.dolor</string>
     <string name="vote">Vote</string>
     <string name="results">Results</string>
+    <string name="profile_picture_description">profile picture</string>
 </resources>

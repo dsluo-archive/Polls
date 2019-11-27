@@ -13,7 +13,7 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/lorem_ipsum" />
+        tools:text="@string/lipsum_sentence" />
 
     <RadioGroup
         android:id="@+id/poll_choices"

@@ -2,6 +2,9 @@ package dev.dsluo.polls.ui.home;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -28,11 +31,33 @@ public class HomeActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer);
         navigation = findViewById(R.id.navigation);
 
+
+        // Fill out header info.
+        View header = navigation.getHeaderView(0);
+        ImageView profilePic = header.findViewById(R.id.profile_picture);
+        TextView name = header.findViewById(R.id.name);
+        TextView email = header.findViewById(R.id.email);
+
+        viewModel.getUser().observe(this, user -> {
+            if (user.photoURL != null)
+                profilePic.setImageURI(user.photoURL);
+            if (user.displayName != null)
+                name.setText(user.displayName);
+            if (user.email != null)
+                email.setText(user.email);
+        });
+
+        // List groups.
         Menu navMenu = navigation.getMenu();
         viewModel.getGroups().observe(this, groups -> {
             navMenu.clear();
             for (Group group : groups)
                 navMenu.add(group.name);
+        });
+
+        navigation.setNavigationItemSelectedListener(menuItem -> {
+            // todo
+            return true;
         });
     }
 }
