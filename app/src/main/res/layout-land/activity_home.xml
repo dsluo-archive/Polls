@@ -11,12 +11,12 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/poll_list"
+            android:id="@+id/poll_list_fragment"
             android:name="dev.dsluo.polls.ui.home.list.PollListFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/poll_detail"
+            app:layout_constraintEnd_toStartOf="@+id/poll_detail_fragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout="@layout/poll_list_fragment">
@@ -24,13 +24,13 @@
         </fragment>
 
         <fragment
-            android:id="@+id/poll_detail"
+            android:id="@+id/poll_detail_fragment"
             android:name="dev.dsluo.polls.ui.home.detail.PollDetailFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/poll_list"
+            app:layout_constraintStart_toEndOf="@+id/poll_list_fragment"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:layout="@layout/poll_detail_fragment">

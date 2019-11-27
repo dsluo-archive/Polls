@@ -2,6 +2,7 @@ package dev.dsluo.polls.ui.home;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,12 +15,15 @@ import com.google.android.material.navigation.NavigationView;
 
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
+import dev.dsluo.polls.ui.home.list.PollListFragment;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private NavigationView navigation;
 
     private HomeViewModel viewModel;
+
+    private PollListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,8 @@ public class HomeActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer);
         navigation = findViewById(R.id.navigation);
-
+        listFragment = (PollListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.poll_list_fragment);
 
         // Fill out header info.
         View header = navigation.getHeaderView(0);
@@ -48,16 +53,17 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // List groups.
+        // TODO: use proper navigation methods
         Menu navMenu = navigation.getMenu();
         viewModel.getGroups().observe(this, groups -> {
             navMenu.clear();
-            for (Group group : groups)
-                navMenu.add(group.name);
-        });
-
-        navigation.setNavigationItemSelectedListener(menuItem -> {
-            // todo
-            return true;
+            for (Group group : groups) {
+                MenuItem menuItem = navMenu.add(group.name);
+                menuItem.setOnMenuItemClickListener(item -> {
+                    listFragment.setActiveGroup(group);
+                    return true;
+                });
+            }
         });
     }
 }

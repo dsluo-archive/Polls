@@ -8,7 +8,7 @@
     tools:context=".ui.auth.LoginActivity">
 
     <fragment
-        android:id="@+id/poll_list"
+        android:id="@+id/poll_list_fragment"
         android:name="dev.dsluo.polls.ui.home.list.PollListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

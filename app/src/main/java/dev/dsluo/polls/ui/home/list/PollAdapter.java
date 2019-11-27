@@ -2,22 +2,31 @@ package dev.dsluo.polls.ui.home.list;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
+import java.util.List;
+
 import dev.dsluo.polls.R;
+import dev.dsluo.polls.data.models.Poll;
 
 public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder> {
-    public static class PollViewHolder extends RecyclerView.ViewHolder {
+    private List<Poll> polls;
 
-        public CardView card;
+    public PollAdapter(List<Poll> polls) {
+        this.polls = polls;
+    }
 
-        public PollViewHolder(@NonNull CardView view) {
-            super(view);
-            this.card = view;
-        }
+    public PollAdapter() {
+        this.polls = Collections.emptyList();
+    }
+
+    public void setPolls(List<Poll> polls) {
+        this.polls = polls;
     }
 
     @NonNull
@@ -30,12 +39,24 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PollViewHolder holder, int position) {
-
+        Poll poll = polls.get(position);
+        holder.question.setText(poll.question);
     }
 
     @Override
     public int getItemCount() {
-        return 100;
+        return polls.size();
     }
 
+    public static class PollViewHolder extends RecyclerView.ViewHolder {
+
+        public final CardView card;
+        public final TextView question;
+
+        public PollViewHolder(@NonNull CardView view) {
+            super(view);
+            card = view;
+            question = card.findViewById(R.id.poll_question);
+        }
+    }
 }
