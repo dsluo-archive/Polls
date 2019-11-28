@@ -7,4 +7,6 @@
     <string name="vote">Vote</string>
     <string name="results">Results</string>
     <string name="profile_picture_description">profile picture</string>
+    <string name="new_poll">New Poll</string>
+    <string name="new_group">New Group</string>
 </resources>

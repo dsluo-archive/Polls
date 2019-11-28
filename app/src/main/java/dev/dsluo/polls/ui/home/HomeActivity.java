@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.navigation.NavigationView;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
@@ -25,6 +26,7 @@ import dev.dsluo.polls.ui.home.list.PollListFragment;
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private NavigationView navigation;
+    private SpeedDialView fab;
 
     private HomeViewModel viewModel;
 
@@ -45,6 +47,8 @@ public class HomeActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer);
         navigation = findViewById(R.id.navigation);
+        fab = findViewById(R.id.fab);
+
         listFragment = (PollListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.poll_list_fragment);
 
@@ -76,5 +80,7 @@ public class HomeActivity extends AppCompatActivity {
                 });
             }
         });
+
+        fab.inflate(R.menu.fab);
     }
 }
