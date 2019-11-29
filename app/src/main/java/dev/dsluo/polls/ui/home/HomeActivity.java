@@ -1,5 +1,6 @@
 package dev.dsluo.polls.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -17,6 +19,7 @@ import com.leinardi.android.speeddial.SpeedDialView;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.ui.home.list.PollListFragment;
+import dev.dsluo.polls.ui.newgroup.NewGroupActivity;
 
 /**
  * Home Activity. Displays current list of polls and list of groups in side navigation bar.
@@ -82,5 +85,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         fab.inflate(R.menu.fab);
+        fab.setOnActionSelectedListener(actionItem -> {
+            if (actionItem.getId() == R.id.new_group) {
+                startActivityForResult(
+                        new Intent(this, NewGroupActivity.class),
+                        RC_NEW_GROUP
+                );
+            }
+            return false;
+        });
     }
 }
