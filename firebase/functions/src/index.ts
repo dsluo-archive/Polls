@@ -5,7 +5,6 @@ admin.initializeApp();
 
 export const createUser = functions.auth.user().onCreate(user => {
     const userDoc = {
-        userId: user.uid,
         emailVerified: user.emailVerified,
         email: user.email,
         displayName: user.displayName,

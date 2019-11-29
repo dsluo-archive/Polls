@@ -2,6 +2,7 @@ package dev.dsluo.polls.data.models;
 
 import android.net.Uri;
 
+import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author David Luo
  */
 public class User {
+    @DocumentId
     public String userId;
     public boolean emailVerified;
     public String email;
