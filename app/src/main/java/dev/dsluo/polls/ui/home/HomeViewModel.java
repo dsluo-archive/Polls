@@ -4,7 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
@@ -14,7 +18,6 @@ import java.util.List;
 import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.data.models.User;
 
-import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
 /**
@@ -64,13 +67,26 @@ public class HomeViewModel extends ViewModel {
                     firestore
                             .collection(USER_COLLECTION)
                             .document(userId)
-                            .collection(GROUP_COLLECTION)
                             .addSnapshotListener(
-                                    (queryDocumentSnapshots, e) -> {
-                                        if (queryDocumentSnapshots == null)
+                                    (documentSnapshot, e) -> {
+                                        if (documentSnapshot == null) {
                                             return;
-                                        List<Group> groups = queryDocumentSnapshots.toObjects(Group.class);
-                                        this.groups.postValue(groups);
+                                        }
+                                        User user = documentSnapshot.toObject(User.class);
+
+                                        List<Task<DocumentSnapshot>> getTasks = new ArrayList<>();
+                                        for (DocumentReference groupRef : user.groups)
+                                            getTasks.add(groupRef.get());
+                                        Tasks.whenAllSuccess(getTasks).addOnSuccessListener(
+                                                objects -> {
+                                                    List<Group> groups = new ArrayList<>();
+                                                    for (Object groupDoc : objects) {
+                                                        Group group = ((DocumentSnapshot) groupDoc).toObject(Group.class);
+                                                        groups.add(group);
+                                                    }
+                                                    this.groups.postValue(groups);
+                                                }
+                                        );
                                     }
                             );
             listenerRegistrations.add(groupsListenerRegistration);

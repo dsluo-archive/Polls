@@ -2,6 +2,10 @@ package dev.dsluo.polls.data.models;
 
 import android.net.Uri;
 
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.List;
+
 /**
  * Model for Users
  *
@@ -15,4 +19,6 @@ public class User {
     public Uri photoURL;
     public String phoneNumber;
     public boolean disabled;
+
+    public List<DocumentReference> groups;
 }
