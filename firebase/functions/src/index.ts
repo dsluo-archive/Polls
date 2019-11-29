@@ -10,7 +10,8 @@ export const createUser = functions.auth.user().onCreate(user => {
         displayName: user.displayName,
         photoURL: user.photoURL,
         phoneNumber: user.phoneNumber,
-        disabled: user.disabled
+        disabled: user.disabled,
+        groups: []
     };
     return admin.firestore()
         .collection('users')
