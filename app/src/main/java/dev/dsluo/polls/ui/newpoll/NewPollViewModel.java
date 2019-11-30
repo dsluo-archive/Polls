@@ -21,4 +21,11 @@ public class NewPollViewModel extends ViewModel {
     public LiveData<List<Group>> getGroups() {
         return groupRepository.getGroups();
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        pollRepository.clearRegistrations();
+        groupRepository.clearRegistrations();
+    }
 }

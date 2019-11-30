@@ -10,4 +10,10 @@ public class NewGroupViewModel extends ViewModel {
     public void createNewGroup(String name, String description, GroupRepository.OnGroupCreatedListener onGroupCreatedListener) {
         groupRepository.createNewGroup(name, description, onGroupCreatedListener);
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        groupRepository.clearRegistrations();
+    }
 }
