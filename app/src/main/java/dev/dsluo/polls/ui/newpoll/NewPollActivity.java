@@ -21,6 +21,11 @@ import java.util.List;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
 
+/**
+ * Activity for creating new polls.
+ *
+ * @author David Luo
+ */
 public class NewPollActivity extends AppCompatActivity {
 
     public static final int DEFAULT_NUM_CHOICES = 3;
@@ -41,6 +46,9 @@ public class NewPollActivity extends AppCompatActivity {
 
     private Group selectedGroup = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +87,9 @@ public class NewPollActivity extends AppCompatActivity {
         cancel.setOnClickListener(v -> finish());
     }
 
+    /**
+     * Adds another choice field to the form.
+     */
     private void appendChoiceField() {
         TextInputLayout choice = (TextInputLayout) getLayoutInflater()
                 .inflate(R.layout.poll_choice, choicesContainer, false);
@@ -103,6 +114,10 @@ public class NewPollActivity extends AppCompatActivity {
         choicesContainer.addView(choice);
     }
 
+    /**
+     * Handle what happens when the save button is clicked.
+     * Handles form validation and invoking the corresponding database methods.
+     */
     private void handleSavePoll() {
         int errorCount = 0;
 

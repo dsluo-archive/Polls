@@ -12,6 +12,8 @@ import dev.dsluo.polls.data.repository.repositories.UserRepository;
 
 /**
  * {@link ViewModel} for {@link HomeActivity}.
+ *
+ * @author David Luo
  */
 public class HomeViewModel extends ViewModel {
     private UserRepository userRepository = new UserRepository();
@@ -32,6 +34,9 @@ public class HomeViewModel extends ViewModel {
         return groupRepository.getGroups();
     }
 
+    /**
+     * Clears Firebase subscriptions created by database operations.
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

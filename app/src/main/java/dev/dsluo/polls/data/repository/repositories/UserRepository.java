@@ -10,6 +10,11 @@ import dev.dsluo.polls.data.repository.FirebaseRepository;
 
 import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
+/**
+ * Handle database operations regarding {@link User}s
+ *
+ * @author David Luo
+ */
 public class UserRepository extends FirebaseRepository {
     private MutableLiveData<User> user;
 

@@ -22,6 +22,11 @@ import dev.dsluo.polls.data.repository.FirebaseRepository;
 import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
+/**
+ * Handles database operations regarding {@link Group}s
+ *
+ * @author David Luo
+ */
 public class GroupRepository extends FirebaseRepository {
     private MutableLiveData<List<Group>> groups;
 
@@ -64,10 +69,20 @@ public class GroupRepository extends FirebaseRepository {
         return groups;
     }
 
+    /**
+     * Handles result of group creation.
+     */
     public interface OnGroupCreatedListener {
         void onGroupCreated(boolean isSuccessful);
     }
 
+    /**
+     * Create a new poll group and join the current user to it.
+     *
+     * @param name                   the name of the group.
+     * @param description            the description of the group.
+     * @param onGroupCreatedListener what to do after it is created.
+     */
     public void createNewGroup(String name, String description, OnGroupCreatedListener onGroupCreatedListener) {
 
         FirebaseUser owner = auth.getCurrentUser();

@@ -17,6 +17,11 @@ import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.POLL_COLLECTION;
 import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
+/**
+ * Handle database operations regarding {@link Poll}s
+ *
+ * @author David Luo
+ */
 public class PollRepository extends FirebaseRepository {
     private MutableLiveData<List<Poll>> polls;
 
@@ -71,10 +76,21 @@ public class PollRepository extends FirebaseRepository {
     }
 
 
+    /**
+     * Handles result of poll creation.
+     */
     public interface OnPollCreatedListener {
         void onPollCreated(boolean isSuccessful);
     }
 
+    /**
+     * Create a new poll with the current user as the author.
+     *
+     * @param group                 Which group to create the poll in.
+     * @param question              The question to poll.
+     * @param choices               Choices for the poll.
+     * @param onPollCreatedListener What to do after the poll is created.
+     */
     public void createNewPoll(Group group, String question, List<String> choices, OnPollCreatedListener onPollCreatedListener) {
         FirebaseUser author = auth.getCurrentUser();
         DocumentReference authorDoc = firestore.collection(USER_COLLECTION).document(author.getUid());

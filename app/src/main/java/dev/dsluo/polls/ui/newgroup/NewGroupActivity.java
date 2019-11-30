@@ -12,6 +12,11 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import dev.dsluo.polls.R;
 
+/**
+ * Activity to create a new group.
+ *
+ * @author David Luo
+ */
 public class NewGroupActivity extends AppCompatActivity {
 
     private NewGroupViewModel viewModel;
@@ -24,6 +29,9 @@ public class NewGroupActivity extends AppCompatActivity {
 
     private Button save;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,10 @@ public class NewGroupActivity extends AppCompatActivity {
         cancel.setOnClickListener(v -> finish());
     }
 
+    /**
+     * Handle what happens when the save button is clicked.
+     * Handles form validation and invoking the corresponding database methods.
+     */
     private void handleSaveGroup() {
         String name = groupName.getText().toString();
         if (name.length() == 0) {

@@ -18,32 +18,28 @@ public class PollListViewModel extends ViewModel {
     private PollRepository pollRepository = new PollRepository();
 
     /**
-     * See {}
+     * See {@link PollRepository#getPolls()}
      */
     public LiveData<List<Poll>> getPolls() {
         return pollRepository.getPolls();
     }
 
     /**
-     * Get the currently displayed {@link Group}.
-     *
-     * @return The currently displayed {@link Group}.
+     * See {@link PollRepository#getActiveGroup()}
      */
     public Group getActiveGroup() {
         return pollRepository.getActiveGroup();
     }
 
     /**
-     * Set the currently displayed {@link Group} and start listening for {@link Poll}s in that {@link Group}.
-     *
-     * @param group The {@link Group} to display.
+     * See {@link PollRepository#setActiveGroup(Group)}
      */
     public void setActiveGroup(Group group) {
         pollRepository.setActiveGroup(group);
     }
 
     /**
-     * Clears any remaining subscriptions subscribed by {@link #setActiveGroup(Group)}.
+     * Clears Firebase subscriptions created by database operations.
      */
     @Override
     protected void onCleared() {
