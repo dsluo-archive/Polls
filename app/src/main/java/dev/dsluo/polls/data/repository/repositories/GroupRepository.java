@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -22,8 +21,6 @@ import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 public class GroupRepository extends FirebaseRepository {
     private MutableLiveData<List<Group>> groups;
 
-    private String userId = FirebaseAuth.getInstance().getUid();
-
     /**
      * Get {@link Group}s subscribed to by the currently authenticated {@link User}.
      *
@@ -35,7 +32,7 @@ public class GroupRepository extends FirebaseRepository {
             ListenerRegistration groupsListenerRegistration =
                     firestore
                             .collection(USER_COLLECTION)
-                            .document(userId)
+                            .document(auth.getUid())
                             .addSnapshotListener(
                                     (documentSnapshot, e) -> {
                                         if (documentSnapshot == null) {

@@ -2,6 +2,7 @@ package dev.dsluo.polls.data.repository;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -19,6 +20,7 @@ public abstract class FirebaseRepository {
     private List<ListenerRegistration> listenerRegistrations = new ArrayList<>();
 
     protected FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    protected FirebaseAuth auth = FirebaseAuth.getInstance();
 
     /**
      * Record a {@link ListenerRegistration} so that it may be cleared later.
