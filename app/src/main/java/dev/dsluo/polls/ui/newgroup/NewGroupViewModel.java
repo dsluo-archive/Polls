@@ -2,12 +2,11 @@ package dev.dsluo.polls.ui.newgroup;
 
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.WriteBatch;
 
 import java.util.Collections;
 
@@ -27,35 +26,21 @@ public class NewGroupViewModel extends ViewModel {
 
     public void createNewGroup(String name, String description, OnGroupCreatedListener onSuccess) {
 
-        String userId = auth.getUid();
+        FirebaseUser owner = auth.getCurrentUser();
+        DocumentReference ownerDoc = firestore.collection(USER_COLLECTION).document(owner.getUid());
 
-        final DocumentReference owner = firestore.collection(USER_COLLECTION)
-                .document(userId);
         Group newGroup = new Group(
                 name,
                 description,
-                Collections.singletonList(owner)
+                Collections.singletonList(ownerDoc)
         );
+        DocumentReference newGroupDoc = firestore.collection(GROUP_COLLECTION).document();
 
-        Task<DocumentReference> createGroup = firestore.collection(GROUP_COLLECTION).add(newGroup);
-
-        Task<Void> joinGroup = createGroup.continueWithTask(
-                task -> {
-                    if (task.isSuccessful()) {
-                        DocumentReference newGroupRef = task.getResult();
-//                        String newGroupDocPath = newGroupRef.getPath();
-
-                        WriteBatch writeBatch = firestore.batch();
-                        writeBatch.update(owner, GROUP_COLLECTION, FieldValue.arrayUnion(newGroupRef));
-                        writeBatch.update(newGroupRef, "owners", FieldValue.arrayUnion(owner));
-
-                        return writeBatch.commit();
-
-                    }
-                    throw new RuntimeException();
-                }
-        );
-
-        joinGroup.addOnCompleteListener(task -> onSuccess.onGroupCreated(task.isSuccessful()));
+        firestore.runTransaction(transaction -> {
+            transaction.set(newGroupDoc, newGroup);
+            transaction.update(ownerDoc, GROUP_COLLECTION, FieldValue.arrayUnion(newGroupDoc));
+            transaction.update(newGroupDoc, "owners", FieldValue.arrayUnion(ownerDoc));
+            return null;
+        }).addOnCompleteListener(task -> onSuccess.onGroupCreated(task.isSuccessful()));
     }
 }
