@@ -5,17 +5,21 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.data.models.User;
 import dev.dsluo.polls.data.repository.FirebaseRepository;
 
+import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
 public class GroupRepository extends FirebaseRepository {
@@ -58,5 +62,29 @@ public class GroupRepository extends FirebaseRepository {
             registerListenerRegistration(groupsListenerRegistration);
         }
         return groups;
+    }
+
+    public interface OnGroupCreatedListener {
+        void onGroupCreated(boolean isSuccessful);
+    }
+
+    public void createNewGroup(String name, String description, OnGroupCreatedListener onGroupCreatedListener) {
+
+        FirebaseUser owner = auth.getCurrentUser();
+        DocumentReference ownerDoc = firestore.collection(USER_COLLECTION).document(owner.getUid());
+
+        Group newGroup = new Group(
+                name,
+                description,
+                Collections.singletonList(ownerDoc)
+        );
+        DocumentReference newGroupDoc = firestore.collection(GROUP_COLLECTION).document();
+
+        firestore.runTransaction(transaction -> {
+            transaction.set(newGroupDoc, newGroup);
+            transaction.update(ownerDoc, GROUP_COLLECTION, FieldValue.arrayUnion(newGroupDoc));
+            transaction.update(newGroupDoc, "owners", FieldValue.arrayUnion(ownerDoc));
+            return null;
+        }).addOnCompleteListener(task -> onGroupCreatedListener.onGroupCreated(task.isSuccessful()));
     }
 }
