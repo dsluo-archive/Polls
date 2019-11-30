@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.newpoll.NewPollActivity" />
         <activity android:name=".ui.newgroup.NewGroupActivity" />
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.auth.LoginActivity">

@@ -3,6 +3,8 @@ package dev.dsluo.polls.data.repository.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import dev.dsluo.polls.data.repository.FirebaseRepository;
 
 import static dev.dsluo.polls.data.Constants.GROUP_COLLECTION;
 import static dev.dsluo.polls.data.Constants.POLL_COLLECTION;
+import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
 public class PollRepository extends FirebaseRepository {
     private MutableLiveData<List<Poll>> polls;
@@ -65,5 +68,31 @@ public class PollRepository extends FirebaseRepository {
                             );
             registerListenerRegistration(pollListenerRegistration);
         }
+    }
+
+
+    public interface OnPollCreatedListener {
+        void onPollCreated(boolean isSuccessful);
+    }
+
+    public void createNewPoll(Group group, String question, List<String> choices, OnPollCreatedListener onPollCreatedListener) {
+        FirebaseUser author = auth.getCurrentUser();
+        DocumentReference authorDoc = firestore.collection(USER_COLLECTION).document(author.getUid());
+
+        Poll newPoll = new Poll(
+                authorDoc,
+                question,
+                choices
+        );
+
+        DocumentReference newPollDoc =
+                firestore
+                        .collection(GROUP_COLLECTION)
+                        .document(group.groupId)
+                        .collection(POLL_COLLECTION)
+                        .document();
+
+        newPollDoc.set(newPoll)
+                .addOnCompleteListener(task -> onPollCreatedListener.onPollCreated(task.isSuccessful()));
     }
 }

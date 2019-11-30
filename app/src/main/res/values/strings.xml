@@ -11,8 +11,12 @@
     <string name="new_group">New Group</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
-    <string name="group_name">Group Name*</string>
+    <string name="group_name">Group Name</string>
     <string name="group_description">Description</string>
     <string name="group_creation_error">Could not create group. Try again later.</string>
+    <string name="poll_creation_error">Could not create poll. Try again later.</string>
+    <string name="poll_choice_hint">Choice %d</string>
     <string name="required_hint">*required</string>
+    <string name="poll_group">Group</string>
+    <string name="poll_question_hint">Poll Question*</string>
 </resources>

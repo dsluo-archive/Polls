@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,6 +19,7 @@ import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.ui.home.list.PollListFragment;
 import dev.dsluo.polls.ui.newgroup.NewGroupActivity;
+import dev.dsluo.polls.ui.newpoll.NewPollActivity;
 
 /**
  * Home Activity. Displays current list of polls and list of groups in side navigation bar.
@@ -34,6 +34,9 @@ public class HomeActivity extends AppCompatActivity {
     private HomeViewModel viewModel;
 
     private PollListFragment listFragment;
+
+    public static final int RC_NEW_POLL = 3843;
+    public static final int RC_NEW_GROUP = 38938;
 
     /**
      * Initializes navbar and begins observation of changes to the {@link dev.dsluo.polls.data.models.User},
@@ -90,6 +93,11 @@ public class HomeActivity extends AppCompatActivity {
                 startActivityForResult(
                         new Intent(this, NewGroupActivity.class),
                         RC_NEW_GROUP
+                );
+            } else if (actionItem.getId() == R.id.new_poll) {
+                startActivityForResult(
+                        new Intent(this, NewPollActivity.class),
+                        RC_NEW_POLL
                 );
             }
             return false;

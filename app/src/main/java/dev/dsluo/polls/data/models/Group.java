@@ -1,5 +1,7 @@
 package dev.dsluo.polls.data.models;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -23,5 +25,11 @@ public class Group {
 
     public Group() {
 
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }
