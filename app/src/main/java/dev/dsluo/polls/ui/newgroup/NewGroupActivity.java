@@ -16,13 +16,13 @@ public class NewGroupActivity extends AppCompatActivity {
 
     private NewGroupViewModel viewModel;
 
-    private Button save;
-
     private EditText groupName;
-    private EditText groupDescription;
-
     private TextInputLayout groupNameContainer;
+
+    private EditText groupDescription;
     private TextInputLayout groupDescriptionContainer;
+
+    private Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +31,24 @@ public class NewGroupActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(NewGroupViewModel.class);
 
-        Button cancel = findViewById(R.id.cancel);
-        save = findViewById(R.id.save);
         groupName = findViewById(R.id.group_name);
-        groupDescription = findViewById(R.id.group_description);
         groupNameContainer = findViewById(R.id.group_name_container);
+
+        groupDescription = findViewById(R.id.group_description);
         groupDescriptionContainer = findViewById(R.id.group_description_container);
 
-        cancel.setOnClickListener(v -> finish());
+        save = findViewById(R.id.save);
+        Button cancel = findViewById(R.id.cancel);
+
+
         save.setOnClickListener(v -> handleSaveGroup());
+        cancel.setOnClickListener(v -> finish());
     }
 
     private void handleSaveGroup() {
         String name = groupName.getText().toString();
         if (name.length() == 0) {
-            groupNameContainer.setError("*required");
+            groupNameContainer.setError(getString(R.string.required_hint));
             return;
         } else {
             groupNameContainer.setErrorEnabled(false);

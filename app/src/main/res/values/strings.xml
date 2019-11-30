@@ -14,4 +14,5 @@
     <string name="group_name">Group Name*</string>
     <string name="group_description">Description</string>
     <string name="group_creation_error">Could not create group. Try again later.</string>
+    <string name="required_hint">*required</string>
 </resources>
