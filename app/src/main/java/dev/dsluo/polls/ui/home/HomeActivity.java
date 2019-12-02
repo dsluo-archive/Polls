@@ -80,8 +80,10 @@ public class HomeActivity extends AppCompatActivity {
             navMenu.clear();
             for (Group group : groups) {
                 MenuItem menuItem = navMenu.add(group.name);
+                menuItem.setCheckable(true);
                 menuItem.setOnMenuItemClickListener(item -> {
                     listFragment.setActiveGroup(group);
+                    drawer.closeDrawers();
                     return true;
                 });
             }
