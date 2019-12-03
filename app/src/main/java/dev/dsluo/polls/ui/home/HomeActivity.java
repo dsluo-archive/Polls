@@ -17,7 +17,7 @@ import com.leinardi.android.speeddial.SpeedDialView;
 
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
-import dev.dsluo.polls.ui.home.list.PollListFragment;
+import dev.dsluo.polls.ui.home.group.GroupFragment;
 import dev.dsluo.polls.ui.join.JoinActivity;
 import dev.dsluo.polls.ui.newgroup.NewGroupActivity;
 import dev.dsluo.polls.ui.newpoll.NewPollActivity;
@@ -78,11 +78,11 @@ public class HomeActivity extends AppCompatActivity {
                 MenuItem menuItem = navMenu.add(group.name);
                 menuItem.setCheckable(true);
                 menuItem.setOnMenuItemClickListener(item -> {
-                    PollListFragment pollList = (PollListFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.poll_list_fragment);
-                    if (pollList == null)
+                    GroupFragment groupFragment = (GroupFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.group_fragment);
+                    if (groupFragment == null)
                         return false;
-                    pollList.setActiveGroup(group);
+                    groupFragment.setActiveGroup(group);
                     drawer.closeDrawers();
                     return true;
                 });

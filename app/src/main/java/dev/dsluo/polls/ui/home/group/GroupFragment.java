@@ -1,4 +1,4 @@
-package dev.dsluo.polls.ui.home.list;
+package dev.dsluo.polls.ui.home.group;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,23 +21,20 @@ import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.ui.home.share.ShareFragment;
 
 /**
- * Fragment to display list of polls for specified group. By default, no group is displayed, and this
- * fragment is empty.
- * <p>
- * TODO: add help information when this fragment is empty.
+ * Fragment to display list of polls for specified group. By default, no group is displayed.
  *
  * @author David Luo
  */
-public class PollListFragment extends Fragment {
+public class GroupFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private PollAdapter adapter;
+    private PollListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private TextView groupName;
     private TextView groupDescription;
     private Button share;
 
-    private PollListViewModel viewModel;
+    private GroupViewModel viewModel;
 
     /**
      * Set the {@link Group} to display.
@@ -63,14 +60,14 @@ public class PollListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.poll_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.group_fragment, container, false);
 
 
         recyclerView = view.findViewById(R.id.poll_recycler);
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new PollAdapter();
+        adapter = new PollListAdapter();
         recyclerView.setAdapter(adapter);
 
         groupName = view.findViewById(R.id.group_name);
@@ -99,7 +96,7 @@ public class PollListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewModel = ViewModelProviders.of(this).get(PollListViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(GroupViewModel.class);
 
         viewModel.getPolls().observe(getViewLifecycleOwner(), polls -> {
             adapter.setPolls(polls);

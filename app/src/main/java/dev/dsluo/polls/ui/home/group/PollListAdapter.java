@@ -1,4 +1,4 @@
-package dev.dsluo.polls.ui.home.list;
+package dev.dsluo.polls.ui.home.group;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,11 +15,11 @@ import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Poll;
 
 /**
- * Adapter for {@link PollListFragment}'s recycler.
+ * Adapter for {@link GroupFragment}'s recycler.
  *
  * @author David Luo
  */
-public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder> {
+public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollViewHolder> {
     private List<Poll> polls;
 
     /**
@@ -27,14 +27,14 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
      *
      * @param polls The list of polls to display.
      */
-    public PollAdapter(List<Poll> polls) {
+    public PollListAdapter(List<Poll> polls) {
         this.polls = polls;
     }
 
     /**
      * Constructor, with default no polls displayed.
      */
-    public PollAdapter() {
+    public PollListAdapter() {
         this.polls = Collections.emptyList();
     }
 
@@ -87,7 +87,7 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
     }
 
     /**
-     * {@link RecyclerView.ViewHolder} for {@link PollAdapter}
+     * {@link RecyclerView.ViewHolder} for {@link PollListAdapter}
      */
     public static class PollViewHolder extends RecyclerView.ViewHolder {
 

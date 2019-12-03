@@ -1,4 +1,4 @@
-package dev.dsluo.polls.ui.home.list;
+package dev.dsluo.polls.ui.home.group;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,11 +10,11 @@ import dev.dsluo.polls.data.models.Poll;
 import dev.dsluo.polls.data.repository.repositories.PollRepository;
 
 /**
- * {@link ViewModel} for {@link PollListFragment}.
+ * {@link ViewModel} for {@link GroupFragment}.
  *
  * @author David Luo
  */
-public class PollListViewModel extends ViewModel {
+public class GroupViewModel extends ViewModel {
     private PollRepository pollRepository = new PollRepository();
 
     /**
