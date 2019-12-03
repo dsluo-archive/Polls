@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author David Luo
  */
+@SuppressWarnings("unused")
 public class User {
     @DocumentId
     public String userId;

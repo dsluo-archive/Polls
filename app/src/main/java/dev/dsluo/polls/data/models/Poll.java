@@ -12,6 +12,7 @@ import java.util.Map;
  *
  * @author David Luo
  */
+@SuppressWarnings("unused")
 public class Poll {
     @DocumentId
     public String pollId;

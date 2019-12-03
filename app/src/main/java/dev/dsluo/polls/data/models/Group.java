@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author David Luo
  */
+@SuppressWarnings("unused")
 public class Group {
     @DocumentId
     public String groupId;
