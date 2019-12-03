@@ -20,4 +20,7 @@
     <string name="poll_group">Group</string>
     <string name="poll_question_hint">Poll Question*</string>
     <string name="join_group">Join Group</string>
+    <string name="join_with_group_id">Join with group ID</string>
+    <string name="join_with_qr_code">Join with QR code</string>
+    <string name="group_id">Group ID (case sensitive)</string>
 </resources>

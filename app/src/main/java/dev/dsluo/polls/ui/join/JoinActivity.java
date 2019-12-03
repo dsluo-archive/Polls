@@ -2,25 +2,33 @@ package dev.dsluo.polls.ui.join;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import dev.dsluo.polls.R;
 
 /**
  * Activity to join a group.
  *
  * @author David Luo
- * <p>
- * tbh this probably doesn't need to be its own activity
  */
 public class JoinActivity extends AppCompatActivity {
 
     private JoinViewModel viewModel;
+
+    private TextInputLayout groupIdFieldContainer;
+    private EditText groupIdField;
+    private Button joinIdButton;
+    private Button joinQrButton;
 
     /**
      * {@inheritDoc}
@@ -28,8 +36,27 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_join);
+
         viewModel = ViewModelProviders.of(this).get(JoinViewModel.class);
-        startScanner();
+
+        groupIdFieldContainer = findViewById(R.id.group_id_container);
+        groupIdField = findViewById(R.id.group_id);
+        joinIdButton = findViewById(R.id.join_button);
+        joinQrButton = findViewById(R.id.join_with_qr_button);
+
+        joinIdButton.setOnClickListener(view -> {
+            String groupId = groupIdField.getText().toString();
+            viewModel.joinGroup(groupId, isSuccessful -> {
+                if (isSuccessful) {
+                    Toast.makeText(this, "Joined group.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    groupIdFieldContainer.setError("Invalid group ID.");
+                }
+            });
+        });
+        joinQrButton.setOnClickListener(view -> startScanner());
     }
 
     /**
@@ -62,7 +89,6 @@ public class JoinActivity extends AppCompatActivity {
     private void handleScanResult(String scanContent) {
         if (scanContent == null) {
             // user pressed back button
-            finish();
             return;
         }
         viewModel.joinGroup(scanContent, isSuccessful -> {
@@ -71,7 +97,6 @@ public class JoinActivity extends AppCompatActivity {
                 finish();
             } else {
                 Toast.makeText(this, "Could not join group.", Toast.LENGTH_SHORT).show();
-                startScanner();
             }
         });
     }
