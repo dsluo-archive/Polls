@@ -26,8 +26,9 @@ public class PollListViewModel extends ViewModel {
 
     /**
      * See {@link PollRepository#getActiveGroup()}
+     * @return
      */
-    public Group getActiveGroup() {
+    public LiveData<Group> getActiveGroup() {
         return pollRepository.getActiveGroup();
     }
 

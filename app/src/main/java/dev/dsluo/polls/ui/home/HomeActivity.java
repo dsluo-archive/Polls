@@ -34,8 +34,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
 
-    private PollListFragment listFragment;
-
     public static final int RC_NEW_POLL = 3843;
     public static final int RC_NEW_GROUP = 38938;
 
@@ -55,9 +53,6 @@ public class HomeActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer);
         navigation = findViewById(R.id.navigation);
         fab = findViewById(R.id.fab);
-
-        listFragment = (PollListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.poll_list_fragment);
 
         // Fill out header info.
         View header = navigation.getHeaderView(0);
@@ -83,7 +78,11 @@ public class HomeActivity extends AppCompatActivity {
                 MenuItem menuItem = navMenu.add(group.name);
                 menuItem.setCheckable(true);
                 menuItem.setOnMenuItemClickListener(item -> {
-                    listFragment.setActiveGroup(group);
+                    PollListFragment pollList = (PollListFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.poll_list_fragment);
+                    if (pollList == null)
+                        return false;
+                    pollList.setActiveGroup(group);
                     drawer.closeDrawers();
                     return true;
                 });

@@ -25,7 +25,7 @@ import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 public class PollRepository extends FirebaseRepository {
     private MutableLiveData<List<Poll>> polls;
 
-    private Group activeGroup = null;
+    private MutableLiveData<Group> activeGroup = new MutableLiveData<>();
 
     /**
      * Get the polls for the currently displayed {@link Group}.
@@ -44,7 +44,7 @@ public class PollRepository extends FirebaseRepository {
      *
      * @return The currently displayed {@link Group}.
      */
-    public Group getActiveGroup() {
+    public LiveData<Group> getActiveGroup() {
         return activeGroup;
     }
 
@@ -54,7 +54,7 @@ public class PollRepository extends FirebaseRepository {
      * @param group The {@link Group} to display.
      */
     public void setActiveGroup(Group group) {
-        this.activeGroup = group;
+        this.activeGroup.postValue(group);
 
         clearRegistrations();
         if (group != null) {
