@@ -18,9 +18,9 @@ import com.leinardi.android.speeddial.SpeedDialView;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
 import dev.dsluo.polls.ui.home.list.PollListFragment;
+import dev.dsluo.polls.ui.join.JoinActivity;
 import dev.dsluo.polls.ui.newgroup.NewGroupActivity;
 import dev.dsluo.polls.ui.newpoll.NewPollActivity;
-import dev.dsluo.polls.ui.join.JoinActivity;
 
 /**
  * Home Activity. Displays current list of polls and list of groups in side navigation bar.
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                         new Intent(this, NewPollActivity.class),
                         RC_NEW_POLL
                 );
-            } else if (actionItem.getId() == R.id.share) {
+            } else if (actionItem.getId() == R.id.join) {
                 startActivity(
                         new Intent(this, JoinActivity.class)
                 );
