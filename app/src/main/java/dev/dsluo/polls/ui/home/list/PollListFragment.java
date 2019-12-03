@@ -41,7 +41,7 @@ public class PollListFragment extends Fragment {
     }
 
     /**
-     * Inflate the fragment layout and start listening for polls.
+     * Inflate the fragment layout.
      *
      * @param inflater           {@inheritDoc}
      * @param container          {@inheritDoc}
@@ -53,7 +53,6 @@ public class PollListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.poll_list_fragment, container, false);
 
-        viewModel = ViewModelProviders.of(this).get(PollListViewModel.class);
 
         recyclerView = view.findViewById(R.id.poll_recycler);
         layoutManager = new LinearLayoutManager(this.getContext());
@@ -62,11 +61,24 @@ public class PollListFragment extends Fragment {
         adapter = new PollAdapter();
         recyclerView.setAdapter(adapter);
 
-        viewModel.getPolls().observe(this, polls -> {
+
+        return view;
+    }
+
+    /**
+     * Initialize the {@link androidx.lifecycle.ViewModel} and start listening for polls.
+     *
+     * @param savedInstanceState {@inheritDoc}
+     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        viewModel = ViewModelProviders.of(this).get(PollListViewModel.class);
+
+        viewModel.getPolls().observe(getViewLifecycleOwner(), polls -> {
             adapter.setPolls(polls);
             adapter.notifyDataSetChanged();
         });
-
-        return view;
     }
 }
