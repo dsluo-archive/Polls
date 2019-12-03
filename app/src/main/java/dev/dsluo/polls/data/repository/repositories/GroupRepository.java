@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -39,9 +38,7 @@ public class GroupRepository extends FirebaseRepository {
         if (this.groups == null) {
             this.groups = new MutableLiveData<>();
             ListenerRegistration groupsListenerRegistration =
-                    firestore
-                            .collection(USER_COLLECTION)
-                            .document(auth.getUid())
+                    USER_DOC
                             .addSnapshotListener(
                                     (documentSnapshot, e) -> {
                                         if (documentSnapshot == null) {
@@ -83,23 +80,55 @@ public class GroupRepository extends FirebaseRepository {
      * @param description            the description of the group.
      * @param onGroupCreatedListener what to do after it is created.
      */
-    public void createNewGroup(String name, String description, OnGroupCreatedListener onGroupCreatedListener) {
-
-        FirebaseUser owner = auth.getCurrentUser();
-        DocumentReference ownerDoc = firestore.collection(USER_COLLECTION).document(owner.getUid());
+    public Group createNewGroup(String name, String description, OnGroupCreatedListener onGroupCreatedListener) {
 
         Group newGroup = new Group(
                 name,
                 description,
-                Collections.singletonList(ownerDoc)
+                Collections.singletonList(USER_DOC)
         );
         DocumentReference newGroupDoc = firestore.collection(GROUP_COLLECTION).document();
 
         firestore.runTransaction(transaction -> {
             transaction.set(newGroupDoc, newGroup);
-            transaction.update(ownerDoc, GROUP_COLLECTION, FieldValue.arrayUnion(newGroupDoc));
-            transaction.update(newGroupDoc, "owners", FieldValue.arrayUnion(ownerDoc));
+            transaction.update(USER_DOC, GROUP_COLLECTION, FieldValue.arrayUnion(newGroupDoc));
+            transaction.update(newGroupDoc, "owners", FieldValue.arrayUnion(USER_DOC));
             return null;
         }).addOnCompleteListener(task -> onGroupCreatedListener.onGroupCreated(task.isSuccessful()));
+
+        return newGroup;
+    }
+
+    /**
+     * Handles result of group joining.
+     */
+    public interface OnGroupJoinedListener {
+        void onGroupJoined(boolean isSuccessful);
+    }
+
+    /**
+     * Join a group.
+     *
+     * @param groupId               The group ID.
+     * @param onGroupJoinedListener handle what to do after group is joined.
+     */
+    public void joinGroup(String groupId, OnGroupJoinedListener onGroupJoinedListener) {
+        firestore.collection(GROUP_COLLECTION)
+                .document(groupId)
+                .get()
+                .continueWithTask(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot snapshot = task.getResult();
+                                if (snapshot.exists())
+                                    return USER_DOC.update(
+                                            "groups",
+                                            FieldValue.arrayUnion(snapshot.getReference())
+                                    );
+                            }
+                            return null;
+                        }
+                )
+                .addOnCompleteListener(task -> onGroupJoinedListener.onGroupJoined(task.isSuccessful()));
     }
 }

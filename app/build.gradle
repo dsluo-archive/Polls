@@ -56,8 +56,9 @@ dependencies {
     // Firebase
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.0'
-    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
 
+    implementation 'com.google.zxing:android-integration:3.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

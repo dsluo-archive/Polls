@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dev.dsluo.polls">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -12,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.join.JoinActivity" />
         <activity android:name=".ui.newpoll.NewPollActivity" />
         <activity android:name=".ui.newgroup.NewGroupActivity" />
         <activity android:name=".ui.home.HomeActivity" />

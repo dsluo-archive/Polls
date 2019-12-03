@@ -9,4 +9,8 @@
         android:id="@+id/new_poll"
         android:icon="@drawable/ic_poll_24dp"
         android:title="@string/new_poll" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_group_add_black_24dp"
+        android:title="@string/join_group" />
 </menu>

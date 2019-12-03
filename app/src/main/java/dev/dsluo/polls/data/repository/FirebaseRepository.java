@@ -3,12 +3,15 @@ package dev.dsluo.polls.data.repository;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
 
 /**
  * Abstract base class for Firebase Repositories.
@@ -21,6 +24,9 @@ public abstract class FirebaseRepository {
 
     protected FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     protected FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    protected final DocumentReference USER_DOC =
+            firestore.collection(USER_COLLECTION).document(auth.getUid());
 
     /**
      * Record a {@link ListenerRegistration} so that it may be cleared later.
