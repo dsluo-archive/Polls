@@ -79,7 +79,7 @@ public class GroupFragment extends Fragment {
             ShareFragment shareFragment = ShareFragment.newInstance(group.groupId);
             if (getFragmentManager() != null) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment_container, shareFragment)
+                        .add(R.id.main_fragment_container, shareFragment)
                         .addToBackStack(null)
                         .commit();
             }
