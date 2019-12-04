@@ -54,4 +54,17 @@ public class Poll {
         for (String choice : choices)
             this.choices.put(choice, 0);
     }
+
+    /**
+     * Get the total number of votes on this poll.
+     *
+     * @return The total number of votes.
+     */
+    public int getVoteCount() {
+        int total = 0;
+        for (Integer count : choices.values()) {
+            total += count;
+        }
+        return total;
+    }
 }

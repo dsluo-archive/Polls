@@ -1,3 +1,5 @@
+<!--  Non-breaking space  -->
+<!DOCTYPE resources [<!ENTITY nbsp "&#160;">]>
 <resources>
     <!--  General  -->
     <string name="app_name">Polls</string>
@@ -48,4 +50,9 @@
     <string name="no_description">No description set.</string>
     <string name="no_group">No group selected.</string>
     <string name="no_group_hint">Select a group from the drawer on the left.</string>
+
+    <!-- Poll Card -->
+    <string name="poll_meta_text"><![CDATA[Posted by <b>%s</b> • %d&nbsp;response(s)]]></string>
+    <string name="lorem_meta"><![CDATA[Posted by <b>Lorem Ipsum</b> • 42&nbsp;responses]]></string>
+    <string name="poll_detail_error">Could not load poll details.</string>
 </resources>
