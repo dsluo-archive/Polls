@@ -36,9 +36,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
 
-    public static final int RC_NEW_POLL = 3843;
-    public static final int RC_NEW_GROUP = 38938;
-
     /**
      * Initializes navbar and begins observation of changes to the {@link dev.dsluo.polls.data.models.User},
      * and their {@link Group}s.
@@ -122,22 +119,26 @@ public class HomeActivity extends AppCompatActivity {
 
         fab.inflate(R.menu.fab);
         fab.setOnActionSelectedListener(actionItem -> {
-            if (actionItem.getId() == R.id.new_group) {
-                startActivityForResult(
-                        new Intent(this, NewGroupActivity.class),
-                        RC_NEW_GROUP
-                );
-            } else if (actionItem.getId() == R.id.new_poll) {
-                startActivityForResult(
-                        new Intent(this, NewPollActivity.class),
-                        RC_NEW_POLL
-                );
-            } else if (actionItem.getId() == R.id.join) {
-                startActivity(
-                        new Intent(this, JoinActivity.class)
-                );
+            Class newActivity;
+            switch (actionItem.getId()) {
+                case R.id.new_group:
+                    newActivity = NewGroupActivity.class;
+                    break;
+                case R.id.new_poll:
+                    newActivity = NewPollActivity.class;
+                    break;
+                case R.id.join:
+                    newActivity = JoinActivity.class;
+                    break;
+                default:
+                    newActivity = null;
+                    break;
             }
-            return false;
+
+            if (newActivity != null) {
+                startActivity(new Intent(this, newActivity));
+            }
+            return newActivity == null;
         });
     }
 }
