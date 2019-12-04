@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class NewPollActivity extends AppCompatActivity {
 
         pollGroupArrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_menu_popup_item);
         pollGroup.setAdapter(pollGroupArrayAdapter);
-        viewModel.getGroups()
+        viewModel.getOwnedGroups()
                 .observe(this, groups -> {
                     pollGroupArrayAdapter.clear();
                     pollGroupArrayAdapter.addAll(groups);

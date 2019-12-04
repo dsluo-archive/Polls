@@ -34,6 +34,13 @@ public class NewPollViewModel extends ViewModel {
     }
 
     /**
+     * See {@link GroupRepository#getOwnedGroups()}
+     */
+    public LiveData<List<Group>> getOwnedGroups() {
+        return groupRepository.getOwnedGroups();
+    }
+
+    /**
      * Clears Firebase subscriptions created by database operations.
      */
     @Override

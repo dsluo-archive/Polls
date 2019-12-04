@@ -28,6 +28,7 @@ import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
  */
 public class GroupRepository extends FirebaseRepository {
     private MutableLiveData<List<Group>> groups;
+    private MutableLiveData<List<Group>> ownedGroups;
 
     /**
      * Get {@link Group}s subscribed to by the currently authenticated {@link User}.
@@ -64,6 +65,30 @@ public class GroupRepository extends FirebaseRepository {
             registerListenerRegistration(groupsListenerRegistration);
         }
         return groups;
+    }
+
+    /**
+     * Get {@link Group}s owned by the currently authenticated {@link User}.
+     *
+     * @return The {@link User}'s owned {@link Group}s
+     */
+    public LiveData<List<Group>> getOwnedGroups() {
+        if (this.ownedGroups == null) {
+            this.ownedGroups = new MutableLiveData<>();
+            ListenerRegistration ownedGroupsListenerReigstration =
+                    firestore.collection(GROUP_COLLECTION)
+                            .whereArrayContains("owners", USER_DOC)
+                            .addSnapshotListener(
+                                    (queryDocumentSnapshots, e) -> {
+                                        if (queryDocumentSnapshots == null)
+                                            return;
+                                        List<Group> ownedGroups = queryDocumentSnapshots.toObjects(Group.class);
+                                        this.ownedGroups.postValue(ownedGroups);
+                                    }
+                            );
+            registerListenerRegistration(ownedGroupsListenerReigstration);
+        }
+        return this.ownedGroups;
     }
 
     /**
