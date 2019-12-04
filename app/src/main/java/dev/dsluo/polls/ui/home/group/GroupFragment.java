@@ -110,6 +110,7 @@ public class GroupFragment extends Fragment {
         });
 
         viewModel.getActiveGroup().observe(getViewLifecycleOwner(), group -> {
+
             CharSequence name;
             CharSequence description;
             int shareVisibility;
@@ -121,6 +122,8 @@ public class GroupFragment extends Fragment {
                 descriptionStyle = Typeface.ITALIC;
                 shareVisibility = View.INVISIBLE;
             } else {
+                adapter.setGroupId(group.groupId);
+
                 name = group.name;
                 if (group.description == null || group.description.length() == 0) {
                     description = getText(R.string.no_description);

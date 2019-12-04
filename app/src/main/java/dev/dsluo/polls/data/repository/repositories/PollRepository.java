@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.List;
@@ -26,6 +27,42 @@ public class PollRepository extends FirebaseRepository {
     private MutableLiveData<List<Poll>> polls;
 
     private MutableLiveData<Group> activeGroup = new MutableLiveData<>();
+
+    public LiveData<Poll> getPoll(String groupId, String pollId) {
+        MutableLiveData<Poll> poll = new MutableLiveData<>();
+        ListenerRegistration pollListenerRegistration = firestore.collection(GROUP_COLLECTION)
+                .document(groupId)
+                .collection(POLL_COLLECTION)
+                .document(pollId)
+                .addSnapshotListener((documentSnapshot, e) -> {
+                    if (documentSnapshot == null)
+                        return;
+                    Poll pollPojo = documentSnapshot.toObject(Poll.class);
+                    poll.postValue(pollPojo);
+                });
+        registerListenerRegistration(pollListenerRegistration);
+        return poll;
+    }
+
+    public interface OnVoteListener {
+        void onVote(boolean isSuccessful);
+    }
+
+    public void vote(String groupId, String pollId, String choiceKey, OnVoteListener onVoteListener) {
+        DocumentReference pollDoc = firestore.collection(GROUP_COLLECTION)
+                .document(groupId)
+                .collection(POLL_COLLECTION)
+                .document(pollId);
+        firestore.runTransaction(
+                transaction -> {
+                    DocumentSnapshot snapshot = transaction.get(pollDoc);
+                    Poll poll = snapshot.toObject(Poll.class);
+                    poll.choices.put(choiceKey, poll.choices.get(choiceKey) + 1);
+                    transaction.update(pollDoc, "choices", poll.choices);
+                    return null;
+                }
+        ).addOnCompleteListener(task -> onVoteListener.onVote(task.isSuccessful()));
+    }
 
     /**
      * Get the polls for the currently displayed {@link Group}.

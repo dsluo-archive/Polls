@@ -1,5 +1,6 @@
 package dev.dsluo.polls.ui.home.group;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,7 @@ import java.util.List;
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Poll;
 import dev.dsluo.polls.data.models.User;
+import dev.dsluo.polls.ui.home.detail.PollDetailFragment;
 
 /**
  * Adapter for {@link GroupFragment}'s recycler.
@@ -26,21 +29,14 @@ import dev.dsluo.polls.data.models.User;
  */
 public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollViewHolder> {
     private List<Poll> polls;
-
-    /**
-     * Constructor
-     *
-     * @param polls The list of polls to display.
-     */
-    public PollListAdapter(List<Poll> polls) {
-        this.polls = polls;
-    }
+    private String groupId;
 
     /**
      * Constructor, with default no polls displayed.
      */
     public PollListAdapter() {
         this.polls = Collections.emptyList();
+        this.groupId = null;
     }
 
     /**
@@ -51,6 +47,10 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollVi
      */
     public void setPolls(List<Poll> polls) {
         this.polls = polls;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     /**
@@ -78,7 +78,7 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollVi
     @Override
     public void onBindViewHolder(@NonNull PollViewHolder holder, int position) {
         Poll poll = polls.get(position);
-        holder.showPoll(poll);
+        holder.showPoll(groupId, poll);
     }
 
     /**
@@ -117,7 +117,7 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollVi
          *
          * @param poll a valid instance of {@link Poll}.
          */
-        public void showPoll(Poll poll) {
+        public void showPoll(String groupId, Poll poll) {
             Resources resources = card.getResources();
 
             question.setText(poll.question);
@@ -137,6 +137,22 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollVi
                     metaText = resources.getString(R.string.poll_detail_error);
                 }
                 meta.setText(metaText);
+            });
+
+            card.setOnClickListener(cardView -> {
+                PollDetailFragment pollDetailFragment = PollDetailFragment.newInstance(groupId, poll.pollId);
+
+                int orientation = resources.getConfiguration().orientation;
+
+                int fragmentContainer = orientation == Configuration.ORIENTATION_PORTRAIT
+                        ? R.id.main_fragment_container
+                        : R.id.detail_fragment_container;
+
+                ((AppCompatActivity) cardView.getContext()).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(fragmentContainer, pollDetailFragment)
+                        .addToBackStack(null)
+                        .commit();
             });
         }
     }

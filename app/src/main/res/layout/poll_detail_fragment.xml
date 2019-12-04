@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding">
 
     <TextView
         android:id="@+id/question_title"
@@ -19,26 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_title">
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@id/question_title" />
 
     <Button
         android:id="@+id/vote"
