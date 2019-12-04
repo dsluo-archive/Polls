@@ -109,16 +109,15 @@ public class GroupFragment extends Fragment {
             int shareVisibility;
             int descriptionStyle;
 
-
             if (group == null) {
-                name = getString(R.string.no_group);
-                description = getString(R.string.no_group_hint);
+                name = getText(R.string.no_group);
+                description = getText(R.string.no_group_hint);
                 descriptionStyle = Typeface.ITALIC;
                 shareVisibility = View.INVISIBLE;
             } else {
                 name = group.name;
                 if (group.description == null || group.description.length() == 0) {
-                    description = getString(R.string.no_description);
+                    description = getText(R.string.no_description);
                     descriptionStyle = Typeface.ITALIC;
                 } else {
                     description = group.description;
@@ -129,7 +128,7 @@ public class GroupFragment extends Fragment {
 
             groupName.setText(name);
             groupDescription.setText(description);
-            groupDescription.setTypeface(groupDescription.getTypeface(), descriptionStyle);
+            groupDescription.setTypeface(null, descriptionStyle);
             share.setVisibility(shareVisibility);
         });
     }

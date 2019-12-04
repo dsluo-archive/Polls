@@ -1,33 +1,51 @@
 <resources>
+    <!--  General  -->
     <string name="app_name">Polls</string>
     <string name="polls">Polls</string>
+
+    <!--  Placeholder  -->
     <string name="lipsum_sentence">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a metus pulvinar, suscipit ex ut, vulputate erat.</string>
     <string name="lipsum_phrase">Lorem Ipsum</string>
     <string name="lipsum_email">lorem@ipsum.dolor</string>
+
+    <!--  Poll Detail  -->
     <string name="vote">Vote</string>
     <string name="results">Results</string>
+
+    <!--  Drawer  -->
     <string name="profile_picture_description">profile picture</string>
-    <string name="new_poll">New Poll</string>
-    <string name="new_group">New Group</string>
+
+    <!--  Form General  -->
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
+    <string name="required_hint">*required</string>
+
+    <!-- New Group  -->
     <string name="group_name">Group Name</string>
+    <string name="new_group">New Group</string>
     <string name="group_description">Description</string>
     <string name="group_creation_error">Could not create group. Try again later.</string>
     <string name="poll_creation_error">Could not create poll. Try again later.</string>
+
+    <!--  New Poll -->
+    <string name="new_poll">New Poll</string>
     <string name="poll_choice_hint">Choice %d</string>
-    <string name="required_hint">*required</string>
-    <string name="poll_group">Group</string>
     <string name="poll_question_hint">Poll Question*</string>
+    <string name="poll_group">Group</string>
+
+    <!--  Join Group  -->
     <string name="join_group">Join Group</string>
     <string name="join_with_group_id">Join with group ID</string>
     <string name="join_with_qr_code">Join with QR code</string>
     <string name="group_id_label">Group ID (case sensitive)</string>
     <string name="qr_code_content_description">QR Code of group ID</string>
-    <string name="share_group">Share</string>
 
+    <!--  Share Group  -->
+    <string name="share_group">Share</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
-    <string name="no_description"><i>No description set.</i></string>
+
+    <!--  Group Detail -->
+    <string name="no_description">No description set.</string>
     <string name="no_group">No group selected.</string>
-    <string name="no_group_hint"><i>Select a group from the drawer on the left.</i></string>
+    <string name="no_group_hint">Select a group from the drawer on the left.</string>
 </resources>
