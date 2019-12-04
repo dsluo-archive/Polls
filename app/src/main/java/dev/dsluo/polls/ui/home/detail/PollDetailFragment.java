@@ -23,6 +23,7 @@ import dev.dsluo.polls.R;
  * Also shows the results of the poll.
  *
  * @author David Luo
+ * @author Darren Ing
  */
 public class PollDetailFragment extends Fragment {
     public static final String ARG_GROUP_ID = "GROUP_ID";
@@ -50,6 +51,11 @@ public class PollDetailFragment extends Fragment {
     public PollDetailFragment() {
     }
 
+    /**
+     * Override onCreate default to also set {@link #groupId} and {@link #pollId}
+     *
+     * @param savedInstanceState {@inheritDoc}
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +67,7 @@ public class PollDetailFragment extends Fragment {
     }
 
     /**
-     * TODO: this fragment
+     * Inflate the fragment layout.
      *
      * @param inflater           {@inheritDoc}
      * @param container          {@inheritDoc}
@@ -103,6 +109,9 @@ public class PollDetailFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Modify current poll with results displayed.
+     */
     private void showResults() {
         for (int i = 0; i < choiceGroup.getChildCount(); i++) {
             RadioButton choiceButton = (RadioButton) choiceGroup.getChildAt(i);
@@ -116,6 +125,11 @@ public class PollDetailFragment extends Fragment {
         results.setVisibility(View.GONE);
     }
 
+    /**
+     * Initialize the {@link androidx.lifecycle.ViewModel} and start listening for results.
+     *
+     * @param savedInstanceState {@inheritDoc}
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

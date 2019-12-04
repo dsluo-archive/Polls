@@ -26,6 +26,7 @@ import dev.dsluo.polls.data.models.Group;
  * Activity for creating new polls.
  *
  * @author David Luo
+ * @author Darren Ing
  */
 public class NewPollActivity extends AppCompatActivity {
 

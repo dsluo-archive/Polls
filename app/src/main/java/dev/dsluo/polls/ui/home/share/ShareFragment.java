@@ -25,6 +25,14 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import dev.dsluo.polls.R;
 
+/**
+ * Fragment for sharing the group within the {@link dev.dsluo.polls.ui.home.group.GroupFragment}
+ * Displays both QR code generated for the group ID and the actual group ID which can be copied
+ * to clipboard easily
+ *
+ * @author David Luo
+ * @author Darren Ing
+ */
 public class ShareFragment extends Fragment {
 
     public static final String ARG_GROUP_ID = "GROUP_ID";
@@ -35,9 +43,18 @@ public class ShareFragment extends Fragment {
 
     private String groupId;
 
+    /**
+     * Default constructor
+     */
     public ShareFragment() {
     }
 
+    /**
+     * Static ShareFragment created from within a specific group ID
+     *
+     * @param groupId   Group ID to be shared
+     * @return {@inheritDoc}
+     */
     public static ShareFragment newInstance(String groupId) {
         Bundle arguments = new Bundle();
         arguments.putString(ARG_GROUP_ID, groupId);
@@ -47,6 +64,11 @@ public class ShareFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Override onCreate default to also set {@link #groupId}
+     *
+     * @param savedInstanceState {@inheritDoc}
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +76,14 @@ public class ShareFragment extends Fragment {
             this.groupId = getArguments().getString(ARG_GROUP_ID);
     }
 
+    /**
+     * Inflate the share fragment
+     *
+     * @param inflater              {@inheritDoc}
+     * @param container             {@inheritDoc}
+     * @param savedInstanceState    {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -82,6 +112,12 @@ public class ShareFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Construct QR code text
+     *
+     * @param text
+     * @throws WriterException
+     */
     private void setQrText(String text) throws WriterException {
         int qrSize = getContext().getResources().getDimensionPixelSize(R.dimen.qr_code_size);
 

@@ -22,12 +22,20 @@ import static dev.dsluo.polls.data.Constants.USER_COLLECTION;
  * Handle database operations regarding {@link Poll}s
  *
  * @author David Luo
+ * @author Darren Ing
  */
 public class PollRepository extends FirebaseRepository {
     private MutableLiveData<List<Poll>> polls;
 
     private MutableLiveData<Group> activeGroup = new MutableLiveData<>();
 
+    /**
+     * Return a poll from the Firebase collection identified by groupId and pollId
+     *
+     * @param groupId   The ID of the group that the poll belongs to.
+     * @param pollId    The ID of the poll.
+     * @return {@inheritDoc}
+     */
     public LiveData<Poll> getPoll(String groupId, String pollId) {
         MutableLiveData<Poll> poll = new MutableLiveData<>();
         ListenerRegistration pollListenerRegistration = firestore.collection(GROUP_COLLECTION)
@@ -44,10 +52,21 @@ public class PollRepository extends FirebaseRepository {
         return poll;
     }
 
+    /**
+     * Set interface for vote success
+     */
     public interface OnVoteListener {
         void onVote(boolean isSuccessful);
     }
 
+    /**
+     * Vote on a current poll with the current user as the author.
+     *
+     * @param groupId           Which group to the poll was created for.
+     * @param pollId            The ID of the poll.
+     * @param choiceKey         Selected choice for the poll.
+     * @param onVoteListener    What to do after the vote.
+     */
     public void vote(String groupId, String pollId, String choiceKey, OnVoteListener onVoteListener) {
         DocumentReference pollDoc = firestore.collection(GROUP_COLLECTION)
                 .document(groupId)
@@ -111,7 +130,6 @@ public class PollRepository extends FirebaseRepository {
             registerListenerRegistration(pollListenerRegistration);
         }
     }
-
 
     /**
      * Handles result of poll creation.

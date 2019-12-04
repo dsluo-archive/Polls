@@ -13,6 +13,7 @@ import dev.dsluo.polls.data.repository.repositories.PollRepository;
  * {@link ViewModel} for {@link NewPollActivity}
  *
  * @author David Luo
+ * @author Darren Ing
  */
 public class NewPollViewModel extends ViewModel {
     private PollRepository pollRepository = new PollRepository();

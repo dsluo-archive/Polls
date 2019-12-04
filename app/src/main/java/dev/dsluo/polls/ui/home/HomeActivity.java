@@ -29,6 +29,7 @@ import dev.dsluo.polls.ui.newpoll.NewPollActivity;
  * Home Activity. Displays current list of polls and list of groups in side navigation bar.
  *
  * @author David Luo
+ * @author Darren Ing
  */
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawer;
