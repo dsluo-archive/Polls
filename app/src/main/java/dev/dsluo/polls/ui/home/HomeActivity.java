@@ -14,11 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.leinardi.android.speeddial.SpeedDialView;
 
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
-import dev.dsluo.polls.ui.home.detail.PollDetailFragment;
+import dev.dsluo.polls.ui.auth.LoginActivity;
 import dev.dsluo.polls.ui.home.group.GroupFragment;
 import dev.dsluo.polls.ui.join.JoinActivity;
 import dev.dsluo.polls.ui.newgroup.NewGroupActivity;
@@ -36,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
 
+    public static final String GROUP_FRAGMENT_TAG = "GROUP_FRAGMENT";
     /**
      * Initializes navbar and begins observation of changes to the {@link dev.dsluo.polls.data.models.User},
      * and their {@link Group}s.
@@ -53,14 +55,18 @@ public class HomeActivity extends AppCompatActivity {
             // Main group fragment. Always shown.
             GroupFragment groupFragment = new GroupFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_fragment_container, groupFragment).commit();
+                    .add(R.id.main_fragment_container, groupFragment)
+                    .addToBackStack(GROUP_FRAGMENT_TAG)
+                    .commit();
 
             // Detail fragment. Only shown in landscape mode.
-            if (findViewById(R.id.detail_fragment_container) != null) {
-                PollDetailFragment detailFragment = new PollDetailFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.detail_fragment_container, detailFragment).commit();
-            }
+//            if (findViewById(R.id.detail_fragment_container) != null) {
+//                PollDetailFragment detailFragment = new PollDetailFragment();
+//                getSupportFragmentManager().beginTransaction()
+//                        .add(R.id.detail_fragment_container, detailFragment)
+//                        .addToBackStack(GROUP_FRAGMENT_TAG)
+//                        .commit();
+//            }
         }
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -130,6 +136,11 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.join:
                     newActivity = JoinActivity.class;
                     break;
+                case R.id.logout:
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                    return false;
                 default:
                     newActivity = null;
                     break;
