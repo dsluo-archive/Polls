@@ -112,6 +112,11 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.PollVi
             meta = card.findViewById(R.id.poll_meta);
         }
 
+        /**
+         * Helper method to show a valid {@link Poll}.
+         *
+         * @param poll a valid instance of {@link Poll}.
+         */
         public void showPoll(Poll poll) {
             Resources resources = card.getResources();
 
