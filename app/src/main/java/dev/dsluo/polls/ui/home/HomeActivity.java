@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.navigation.NavigationView;
@@ -17,6 +18,7 @@ import com.leinardi.android.speeddial.SpeedDialView;
 
 import dev.dsluo.polls.R;
 import dev.dsluo.polls.data.models.Group;
+import dev.dsluo.polls.ui.home.detail.PollDetailFragment;
 import dev.dsluo.polls.ui.home.group.GroupFragment;
 import dev.dsluo.polls.ui.join.JoinActivity;
 import dev.dsluo.polls.ui.newgroup.NewGroupActivity;
@@ -48,6 +50,22 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        if (savedInstanceState == null) {
+            // We're initializing for the first time.
+
+            // Main group fragment. Always shown.
+            GroupFragment groupFragment = new GroupFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.main_fragment_container, groupFragment).commit();
+
+            // Detail fragment. Only shown in landscape mode.
+            if (findViewById(R.id.detail_fragment_container) != null) {
+                PollDetailFragment detailFragment = new PollDetailFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.detail_fragment_container, detailFragment).commit();
+            }
+        }
+
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
         drawer = findViewById(R.id.drawer);
@@ -60,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView name = header.findViewById(R.id.name);
         TextView email = header.findViewById(R.id.email);
 
+        // Start observing user to get/keep updated user info.
         viewModel.getUser().observe(this, user -> {
             if (user.photoURL != null)
                 profilePic.setImageURI(user.photoURL);
@@ -69,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
                 email.setText(user.email);
         });
 
-        // List groups.
+        // Populate navigation menu with groups.
         // TODO: use proper navigation methods
         Menu navMenu = navigation.getMenu();
         viewModel.getGroups().observe(this, groups -> {
@@ -79,9 +98,21 @@ public class HomeActivity extends AppCompatActivity {
                 menuItem.setCheckable(true);
                 menuItem.setOnMenuItemClickListener(item -> {
                     GroupFragment groupFragment = (GroupFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.group_fragment);
+                            .findFragmentById(R.id.main_fragment_container);
+
+                    // this only happens when fragment is not being displayed in portrait mode.
                     if (groupFragment == null)
                         return false;
+
+                    Fragment detailFragment = getSupportFragmentManager()
+                            .findFragmentById(R.id.detail_fragment_container);
+
+                    if (detailFragment != null) {
+                        getSupportFragmentManager().beginTransaction()
+                                .remove(detailFragment)
+                                .commit();
+                    }
+
                     groupFragment.setActiveGroup(group);
                     drawer.closeDrawers();
                     return true;

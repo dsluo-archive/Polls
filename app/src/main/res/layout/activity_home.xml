@@ -14,15 +14,7 @@
         <FrameLayout
             android:id="@+id/main_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <fragment
-                android:id="@+id/group_fragment"
-                android:name="dev.dsluo.polls.ui.home.group.GroupFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/group_fragment" />
-        </FrameLayout>
+            android:layout_height="match_parent" />
 
         <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/fab"

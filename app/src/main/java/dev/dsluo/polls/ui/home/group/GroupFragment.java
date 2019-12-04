@@ -1,5 +1,6 @@
 package dev.dsluo.polls.ui.home.group;
 
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -77,12 +78,17 @@ public class GroupFragment extends Fragment {
         share.setOnClickListener(button -> {
             Group group = getActiveGroup().getValue();
             ShareFragment shareFragment = ShareFragment.newInstance(group.groupId);
-            if (getFragmentManager() != null) {
-                getFragmentManager().beginTransaction()
-                        .add(R.id.main_fragment_container, shareFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
+
+            int orientation = getResources().getConfiguration().orientation;
+
+            int fragmentContainer = orientation == Configuration.ORIENTATION_PORTRAIT
+                    ? R.id.main_fragment_container
+                    : R.id.detail_fragment_container;
+
+            getFragmentManager().beginTransaction()
+                    .replace(fragmentContainer, shareFragment)
+                    .addToBackStack(null)
+                    .commit();
         });
         return view;
     }
